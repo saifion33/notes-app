@@ -1,0 +1,78 @@
+.note-editor {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 90%, 80%);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.note-edit-card {
+    width: 30%;
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+    box-shadow: hsla(0, 0%, 60%, 80%);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.note-edit-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.note-edit-form label {
+    font-size: 1.2rem;
+    font-family: roboto-regular;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.note-edit-form input,
+textarea {
+    border: none;
+    padding: 0.5rem;
+    border-bottom: 1px solid rgb(119, 119, 119);
+    outline: none;
+    letter-spacing: 1.2px;
+}
+
+textarea {
+    letter-spacing: normal;
+
+}
+
+.btn-container {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 0.8rem;
+}
+
+.btn {
+    padding: 0.4em 1em;
+    border: none;
+    font-size: 18px;
+    border-radius: 0.2em;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: 0 0 0.3em rgb(213, 213, 213);
+}
+
+#submit-btn {
+    background-color: #4BF1D8;
+}
+
+#cancel-btn {
+    background-color: transparent;
+    border: 2px solid red;
+}

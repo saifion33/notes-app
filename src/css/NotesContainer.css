@@ -1,0 +1,85 @@
+.notes-not-found {
+    font-size: 24px;
+    font-family: roboto-regular;
+    text-align: center;
+}
+
+.notes-container {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.pagination-container {
+    display: flex;
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 20px;
+    list-style: none;
+    margin-left: 40%;
+}
+
+.pagination__link {
+    background-color: #4BF1D8;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.pagination__link:hover,
+.pagination__link--active:hover {
+    box-shadow: 0 0 0.5rem hsl(0, 0%, 68%);
+}
+
+.pagination__link--active {
+    background-color: #4BF1D8;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.3rem;
+}
+
+
+.pagination li {
+    cursor: pointer;
+}
+
+.pages {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 2rem;
+    width: 100%;
+    height: min-content;
+    position: relative;
+    padding: 2rem;
+}
+
+.addNote-btn {
+    margin-left: auto;
+    margin-right: 2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    background-color: #4BF1D8;
+    cursor: pointer;
+
+}
+
+.addNote-btn:hover {
+    box-shadow: 0 0 0.4rem rgb(201, 201, 201);
+}
+
+.addNote-btn img {
+    width: 2rem;
+    margin-left: 0.5rem;
+}

@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Alertbar from './components/Alertbar';
+import NotesContainer from './components/Notes container/NotesContainer';
+import FooterBar from './components/FooterBar';
+import Topbar from './components/Topbar';
+import React, { useContext } from 'react';
+import NoteEditor from './components/NoteEditor';
+import context from './context/context';
 function App() {
+  const { noteEditorOpen } = useContext(context)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {noteEditorOpen && <NoteEditor />}
+      <Topbar />
+      <Alertbar />
+      <NotesContainer />
+
     </div>
   );
 }

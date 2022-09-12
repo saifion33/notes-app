@@ -1,0 +1,79 @@
+.note-card {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 0.5rem rgba(224, 224, 224, 0.511);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.note-card:hover {
+    box-shadow: 0 0 0.5rem rgba(29, 180, 173, 0.511);
+}
+
+.unpin-icon {
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.note-details-container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-title {
+    text-align: center;
+    padding: 0.5rem 0;
+    font-family: roboto;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+}
+
+.note-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.note-tag {
+    background-color: #cfcfcf;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.8rem;
+    font-size: 12px;
+}
+
+.note-card span {
+    width: 100%;
+    border-top: 1px solid rgb(190, 190, 190);
+    display: block;
+}
+
+.note-description {
+    padding: 0.8rem 0;
+    line-height: 1.4rem;
+    letter-spacing: 0.05rem;
+    white-space: wrap;
+}
+
+.note-action-container {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.note-action-container img {
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.note-action-container img:hover {
+    transition: all 0.2s linear;
+    transform: scale(1.1);
+
+}
