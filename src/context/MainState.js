@@ -8,6 +8,7 @@ const MainState = (props) => {
     const [allNotes, setAllNotes] = useState(localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []);
     const [noNotesToDisplay, setNoNotesToDisplay] = useState(false);
     const [notesLoading, setNotesLoading] = useState(false);
+    const [pinnedNotes, setPinnedNotes] = useState(localStorage.getItem('pinnedNotes') ? JSON.parse(localStorage.getItem('pinnedNotes')) : []);
     const [pinnedNotesIds, setPinnedNotesIds] = useState(localStorage.getItem('pinnedNotesIds') ? JSON.parse(localStorage.getItem('pinnedNotesIds')) : []);
     //Alert related properties
     const [alertMessage, setAlertMessage] = useState('');
@@ -74,7 +75,9 @@ const MainState = (props) => {
             if (!localStorage.getItem('notes')) {
                 setAllNotes(notes);
             }
-            localStorage.setItem('notes', JSON.stringify(notes));
+            if (!localStorage.getItem('pinnedNotes')) {
+                localStorage.setItem('notes', JSON.stringify(notes));
+            }
             if (notes.length < 1) {
                 setNoNotesToDisplay(true);
             }
@@ -186,12 +189,14 @@ const MainState = (props) => {
 
     }
     // Pin Note function
-    const pinNote = (noteId) => {
+    const pinNote = (pinNote) => {
+        const noteId = pinNote.id;
         pinnedNotesIds.push(noteId);
+        // pinnedNotes.push(pinNote);
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
-        const noteIndex = noteIdToIndex(noteId);
-        const note = allNotes.splice(noteIndex, 1)[0];
-        allNotes.unshift(note);
+        // localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
+        allNotes.splice(noteIdToIndex(pinNote.id), 1);
+        allNotes.unshift(pinNote);
         localStorage.setItem('notes', JSON.stringify(allNotes));
         showAlert('sucessfull', 'note Pinned successfully');
 
@@ -200,7 +205,9 @@ const MainState = (props) => {
     const unPinNote = (noteId) => {
         const noteIdIndexInPinnedNotes = pinnedNotesIds.indexOf(noteId);
         pinnedNotesIds.splice(noteIdIndexInPinnedNotes, 1);
+        // pinnedNotes.splice(noteIdIndexInPinnedNotes, 1);
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
+        // localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
         const noteCurrentIndex = noteIdToIndex(noteId);
         const note = allNotes.splice(noteCurrentIndex, 1)[0];
         allNotes.push(note);

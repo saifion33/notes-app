@@ -34,7 +34,7 @@ const NotesContainer = () => {
             <div className="note-description">{notes.description}</div>
         </div>
         <div className="note-action-container">
-            {!(JSON.parse(localStorage.getItem('pinnedNotesIds'))?.includes(notes.id)) && <img src={pinIcon} onClick={() => { pinNote(notes.id) }} alt="pin icon" />}
+            {!(JSON.parse(localStorage.getItem('pinnedNotesIds'))?.includes(notes.id)) && <img src={pinIcon} onClick={() => { pinNote(notes) }} alt="pin icon" />}
             <img src={deleteIcon} onClick={() => { deleteNote(notes.id) }} alt="delete icon" />
         </div>
     </div>)
