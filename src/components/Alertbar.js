@@ -12,7 +12,7 @@ const Alertbar = () => {
         padding: ' 2rem 0',
         position: 'sticky',
         top: '5rem',
-        zIndex: 4,
+        zIndex: 2,
     }
 
     return (

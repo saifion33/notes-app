@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import context from "./context";
 
 const MainState = (props) => {
-    const navigate = useNavigate();
     // eslint-disable-next-line
     const [allNotes, setAllNotes] = useState(localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []);
     const [noNotesToDisplay, setNoNotesToDisplay] = useState(false);
     const [notesLoading, setNotesLoading] = useState(false);
-    const [pinnedNotes, setPinnedNotes] = useState(localStorage.getItem('pinnedNotes') ? JSON.parse(localStorage.getItem('pinnedNotes')) : []);
+    // eslint-disable-next-line
     const [pinnedNotesIds, setPinnedNotesIds] = useState(localStorage.getItem('pinnedNotesIds') ? JSON.parse(localStorage.getItem('pinnedNotesIds')) : []);
     //Alert related properties
     const [alertMessage, setAlertMessage] = useState('');
@@ -46,17 +44,6 @@ const MainState = (props) => {
         const indexOfNote = allNotes.indexOf(note);
         return indexOfNote
     }
-    const totalPages = Math.ceil(allNotes.length / 6);
-    const [pages, setPages] = useState([])
-    const pageCounter = () => {
-        let itemIndex = 0;
-        for (let i = 0; i < totalPages; i++) {
-            const page = allNotes.slice(itemIndex, itemIndex + 6);
-            pages.push(page);
-            itemIndex += 6;
-        }
-    }
-    // Get Notes from server
     const getNotes = async () => {
         if (navigator.onLine) {
             setNotesLoading(true);
@@ -75,7 +62,7 @@ const MainState = (props) => {
             if (!localStorage.getItem('notes')) {
                 setAllNotes(notes);
             }
-            if (!localStorage.getItem('pinnedNotes')) {
+            if (!localStorage.getItem('pinnedNotesIds')) {
                 localStorage.setItem('notes', JSON.stringify(notes));
             }
             if (notes.length < 1) {
@@ -192,9 +179,7 @@ const MainState = (props) => {
     const pinNote = (pinNote) => {
         const noteId = pinNote.id;
         pinnedNotesIds.push(noteId);
-        // pinnedNotes.push(pinNote);
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
-        // localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
         allNotes.splice(noteIdToIndex(pinNote.id), 1);
         allNotes.unshift(pinNote);
         localStorage.setItem('notes', JSON.stringify(allNotes));
@@ -205,9 +190,7 @@ const MainState = (props) => {
     const unPinNote = (noteId) => {
         const noteIdIndexInPinnedNotes = pinnedNotesIds.indexOf(noteId);
         pinnedNotesIds.splice(noteIdIndexInPinnedNotes, 1);
-        // pinnedNotes.splice(noteIdIndexInPinnedNotes, 1);
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
-        // localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
         const noteCurrentIndex = noteIdToIndex(noteId);
         const note = allNotes.splice(noteCurrentIndex, 1)[0];
         allNotes.push(note);
@@ -222,7 +205,7 @@ const MainState = (props) => {
 
 
     return (
-        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote, pageCounter, pages }}>
+        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote }}>
             {props.children}
         </context.Provider>
     )
