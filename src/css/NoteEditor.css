@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(3px);
+    z-index: 4;
 }
 
 .note-edit-card {

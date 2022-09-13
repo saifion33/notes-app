@@ -150,6 +150,8 @@ const MainState = (props) => {
                 const noteIdIndexInPinnedNotes = pinnedNotesIds.indexOf(noteId);
                 pinnedNotesIds.splice(noteIdIndexInPinnedNotes, 1);
                 localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
+                delete pinnedNotesOldIndex[noteId];
+                localStorage.setItem('pinnedNotesOldIndex', JSON.stringify(pinnedNotesOldIndex));
                 showAlert('sucessfull', 'yes includes')
             }
             if (allNotes.length < 1) {
@@ -175,10 +177,16 @@ const MainState = (props) => {
         }
 
     }
+    // pinnedNotesOldIndex
+    // eslint-disable-next-line
+    const [pinnedNotesOldIndex, setPinnedNotesOldIndex] = useState(localStorage.getItem('pinnedNotesOldIndex') ? JSON.parse(localStorage.getItem('pinnedNotesOldIndex')) : {});
     // Pin Note function
     const pinNote = (pinNote) => {
         const noteId = pinNote.id;
+        const noteIndex = noteIdToIndex(noteId);
         pinnedNotesIds.push(noteId);
+        pinnedNotesOldIndex[noteId] = noteIndex;
+        localStorage.setItem('pinnedNotesOldIndex', JSON.stringify(pinnedNotesOldIndex));
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
         allNotes.splice(noteIdToIndex(pinNote.id), 1);
         allNotes.unshift(pinNote);
@@ -186,16 +194,34 @@ const MainState = (props) => {
         showAlert('sucessfull', 'note Pinned successfully');
 
     }
+
+    // note index finder function
+    const indexFinder = (oldIndex) => {
+        let index = oldIndex;
+        for (let i = 0; i < pinnedNotesIds.length; i++) {
+            if (pinnedNotesIds.includes(allNotes[index].id)) {
+                index += 1;
+            }
+            else {
+                return index;
+            }
+        }
+        return index - 1;
+    }
     // unpin note function
     const unPinNote = (noteId) => {
         const noteIdIndexInPinnedNotes = pinnedNotesIds.indexOf(noteId);
-        pinnedNotesIds.splice(noteIdIndexInPinnedNotes, 1);
-        localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
         const noteCurrentIndex = noteIdToIndex(noteId);
+        let index = indexFinder(pinnedNotesOldIndex[noteId]);
+        console.log(index);
         const note = allNotes.splice(noteCurrentIndex, 1)[0];
-        allNotes.push(note);
+        allNotes.splice(index, 0, note);
+        pinnedNotesIds.splice(noteIdIndexInPinnedNotes, 1);
+        delete pinnedNotesOldIndex[noteId]
+        localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
         localStorage.setItem('notes', JSON.stringify(allNotes));
-        showAlert('sucessfull', 'note unpin successfully')
+        localStorage.setItem('pinnedNotesOldIndex', JSON.stringify(pinnedNotesOldIndex));
+        showAlert('sucessfull', 'note unpin successfully' + index);
     }
     useEffect(() => {
         getNotes();

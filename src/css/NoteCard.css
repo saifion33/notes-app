@@ -72,6 +72,7 @@
 .note-action-container img {
     width: 1.5rem;
     cursor: pointer;
+    z-index: 3;
 }
 
 .note-action-container img:hover {

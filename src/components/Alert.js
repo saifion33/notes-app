@@ -10,6 +10,7 @@ const Alert = (props) => {
         backgroundColor: alertBackgroundColor,
         padding: '10px',
         borderRadius: '20px',
+        zIndex: '5'
     }
 
     return (
