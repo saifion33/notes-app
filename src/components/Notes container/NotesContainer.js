@@ -12,8 +12,14 @@ import addIcon from '../../icons/add-icon.png';
 const NotesContainer = () => {
 
 
-    const { allNotes, notesLoading, noNotesToDisplay, pinnedNotesIds, pinNote, unPinNote, openNoteEditor, deleteNote } = useContext(context);
-    // pageCounter();
+    const { searchBoxInput, allNotes, notesLoading, noNotesToDisplay, pinnedNotesIds, pinNote, unPinNote, openNoteEditor, deleteNote } = useContext(context);
+    const searchFuction = (allNotes) => {
+        const reg = new RegExp(searchBoxInput, 'gi')
+        if (searchBoxInput.length <= 0) {
+            return allNotes.title;
+        }
+        return allNotes?.title?.match(reg);
+    }
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
         console.log(this)
@@ -21,7 +27,7 @@ const NotesContainer = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const PER_PAGE = 6;
     const offset = currentPage * PER_PAGE;
-    const currentPageData = allNotes.slice(offset, offset + PER_PAGE).map((notes) => <div key={notes.title} className='note-card'>
+    const currentPageData = allNotes.filter(note => searchFuction(note)).slice(offset, offset + PER_PAGE).map((notes) => <div key={notes.title} className='note-card'>
         {JSON.parse(localStorage.getItem('pinnedNotesIds'))?.includes(notes.id) && <img className='unpin-icon' src={unpinIcon} onClick={() => { unPinNote(notes.id) }} alt="unpin" />}
         <div className="note-details-container" onClick={() => { openNoteEditor('editNote', notes) }} >
             <h2 className="note-title">{notes.title}</h2>

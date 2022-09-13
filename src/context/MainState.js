@@ -21,6 +21,9 @@ const MainState = (props) => {
         }, 1500);
     }
 
+    // Note search related properties
+    const [searchBoxInput, setSearchBoxInput] = useState('');
+    
     // Note Editing related properties
     // This is the default state of note editor
     const [noteEditorOpen, setNoteEditorOpen] = useState(false);
@@ -231,7 +234,7 @@ const MainState = (props) => {
 
 
     return (
-        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote }}>
+        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote,searchBoxInput,setSearchBoxInput }}>
             {props.children}
         </context.Provider>
     )
