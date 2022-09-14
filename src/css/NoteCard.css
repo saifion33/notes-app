@@ -1,11 +1,12 @@
 .note-card {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 0.5rem rgba(224, 224, 224, 0.511);
+    box-shadow: 0 0 0.5rem rgba(154, 154, 154, 0.511);
     border-radius: 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
-
+    width: 98%;
+    max-width: 450px;
 
 }
 

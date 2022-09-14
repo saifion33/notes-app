@@ -23,7 +23,7 @@ const MainState = (props) => {
 
     // Note search related properties
     const [searchBoxInput, setSearchBoxInput] = useState('');
-    
+
     // Note Editing related properties
     // This is the default state of note editor
     const [noteEditorOpen, setNoteEditorOpen] = useState(false);
@@ -224,7 +224,7 @@ const MainState = (props) => {
         localStorage.setItem('pinnedNotesIds', JSON.stringify(pinnedNotesIds));
         localStorage.setItem('notes', JSON.stringify(allNotes));
         localStorage.setItem('pinnedNotesOldIndex', JSON.stringify(pinnedNotesOldIndex));
-        showAlert('sucessfull', 'note unpin successfully' + index);
+        showAlert('sucessfull', 'note unpin successfully');
     }
     useEffect(() => {
         getNotes();
@@ -234,7 +234,7 @@ const MainState = (props) => {
 
 
     return (
-        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote,searchBoxInput,setSearchBoxInput }}>
+        <context.Provider value={{ allNotes, noNotesToDisplay, notesLoading, setNoteEditorOpen, isAlertOpen, showAlert, alertMessage, alertType, noteEditorOpen, openNoteEditor, closeNoteEditor, noteToBeEdit, actionType, updateNote, addNote, deleteNote, pinNote, unPinNote, searchBoxInput, setSearchBoxInput }}>
             {props.children}
         </context.Provider>
     )

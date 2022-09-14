@@ -48,15 +48,6 @@ const NotesContainer = () => {
 
     return (
         <div className="notes-container">
-            {/* { {
-                <Routes>
-                    {
-                        allNotes.length > 0 && (pages.map((notes, index) => <Route exact path={`page${index + 1}`} key={`page${index}`} element={<Page notes={notes} />} />))
-
-                    }
-
-                </Routes> */}
-
 
             {
 
@@ -70,11 +61,11 @@ const NotesContainer = () => {
                     <h2>Loading....</h2>
                 </div>
             }
-            <div className='pages'>
+            {!notesLoading && <div className='pages'>
                 {currentPageData}
-            </div>
+            </div>}
 
-            <div className='pagination-container'>
+            {!notesLoading && <div className='pagination-container'>
                 {pageCount > 1 && (<ReactPaginate
                     previousLabel={"← Previous"}
                     nextLabel={"Next →"}
@@ -87,7 +78,7 @@ const NotesContainer = () => {
                     activeClassName={"pagination__link--active"}
                 />)}
                 <div className="addNote-btn" onClick={() => { openNoteEditor('addNote', {}) }}>Add Note <img src={addIcon} alt='Add' /> </div>
-            </div>
+            </div>}
 
 
 

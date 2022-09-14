@@ -6,11 +6,13 @@
 
 .topbar {
     width: 100%;
-    height: 4rem;
     background-color: #4BF1D8;
     display: flex;
+    justify-content: center;
+    row-gap: 1rem;
     align-items: center;
-    padding: 0 2rem;
+    flex-wrap: wrap;
+    padding: 1rem;
     position: sticky;
     top: 0;
     left: 0;
@@ -20,6 +22,8 @@
 .logo-text {
     font-family: aldrich;
     font-size: 42px;
+    text-align: center;
+
 }
 
 .search-box {
