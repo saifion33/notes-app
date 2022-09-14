@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import context from '../context/context'
 import '../css/NoteEditor.css'
 const NoteEditor = () => {
-    const { allNotes, closeNoteEditor, showAlert, noteToBeEdit, actionType, addNote, updateNote } = useContext(context);
+    const {closeNoteEditor, showAlert, noteToBeEdit, actionType, addNote, updateNote } = useContext(context);
     const [note, setNote] = useState({ title: '', description: '', tags: '', id: '' });
     const formAction = actionType === 'editNote' ? updateNote : addNote
     useEffect(() => {
