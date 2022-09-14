@@ -2,16 +2,26 @@ import { useState, useEffect } from "react";
 import context from "./context";
 
 const MainState = (props) => {
+   
+    // allNotes is used to store all Notes fetched from the server.
     // eslint-disable-next-line
     const [allNotes, setAllNotes] = useState(localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []);
+    
+    // noNotesToDisplay is used to show No Notes to Display when there is no notes
     const [noNotesToDisplay, setNoNotesToDisplay] = useState(false);
+
+    // While request is sending to server set notes loading true and when get response from server set it to false
     const [notesLoading, setNotesLoading] = useState(false);
+
+    // store pinned notes ids 
     // eslint-disable-next-line
     const [pinnedNotesIds, setPinnedNotesIds] = useState(localStorage.getItem('pinnedNotesIds') ? JSON.parse(localStorage.getItem('pinnedNotesIds')) : []);
-    //Alert related properties
+    
+    //###################################  SHOW ALERT FUCTION #######################################
     const [alertMessage, setAlertMessage] = useState('');
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [alertType, setAlertType] = useState('sucessfull')
+    // This function is take alert type and alert message and show alert message and auto dismiss in 1.5 seconds.
     const showAlert = (alertType, alertMessage) => {
         setAlertMessage(alertMessage);
         setAlertType(alertType);
@@ -21,15 +31,15 @@ const MainState = (props) => {
         }, 1500);
     }
 
-    // Note search related properties
+    // ##################################### Note search related properties ####################################
     const [searchBoxInput, setSearchBoxInput] = useState('');
 
-    // Note Editing related properties
+    // #################################### NOTES EDITING FUNCTION ##############################################
     // This is the default state of note editor
     const [noteEditorOpen, setNoteEditorOpen] = useState(false);
     const [noteToBeEdit, setNoteToBeEdit] = useState({ title: '', description: '', tags: '' });
     const [actionType, setActionType] = useState('');
-
+    // This function open note editor. it Takes action type means add new note or edit existing note.
     const openNoteEditor = (actionType, note) => {
         setActionType(actionType);
         setNoteEditorOpen(true);
@@ -37,16 +47,22 @@ const MainState = (props) => {
             setNoteToBeEdit(note);
         }
     }
+    // This function close NoteEditor
     const closeNoteEditor = () => {
         setNoteToBeEdit({ title: '', description: '', tags: '' })
         setNoteEditorOpen(false);
     }
+
+    // ########################################################################################################
     // This function filter given note and give it's index in allNotes
     const noteIdToIndex = (noteId) => {
         const note = allNotes.filter(note => note.id === noteId)[0];
         const indexOfNote = allNotes.indexOf(note);
         return indexOfNote
     }
+
+    // #################################### This function get note from server #############################
+
     const getNotes = async () => {
         if (navigator.onLine) {
             setNotesLoading(true);
@@ -78,37 +94,9 @@ const MainState = (props) => {
             showAlert('danger', 'Please connect to internet and try again')
         }
     }
-    // Note Update functions
-    const updateNote = async (updatedNote) => {
-        if (navigator.onLine) {
-            const noteIndex = noteIdToIndex(updatedNote.id);
-            allNotes.splice(noteIndex, 1, updatedNote);
-            localStorage.setItem('notes', JSON.stringify(allNotes));
-            let headersList = {
-                "Accept": "*/*",
-                "Content-Type": "application/json"
-            }
 
-            let bodyContent = JSON.stringify({
-                "title": updatedNote.title,
-                "description": updatedNote.description,
-                "tags": updatedNote.tags
-            });
 
-            const response = await fetch(`https://notes-app-e415d-default-rtdb.firebaseio.com/notes/${updatedNote.id}.json`, {
-                method: "PUT",
-                body: bodyContent,
-                headers: headersList
-            });
-            if (response.status === 200) {
-                showAlert('sucessfull', 'Note updated successfully ')
-            }
-        }
-        else {
-            showAlert('danger', 'Please connect to the internet and try again');
-        }
-    }
-    // Add note function
+    // ############################### ADD NOTE FUNCTION #####################################
     const addNote = async (note) => {
         if (navigator.onLine) {
             allNotes.push(note);
@@ -146,7 +134,40 @@ const MainState = (props) => {
         }
 
     }
-    // Delete note function
+    //############################### NOTE UPDATE FUNCTION #############################
+    const updateNote = async (updatedNote) => {
+        if (navigator.onLine) {
+            const noteIndex = noteIdToIndex(updatedNote.id);
+            allNotes.splice(noteIndex, 1, updatedNote);
+            localStorage.setItem('notes', JSON.stringify(allNotes));
+            let headersList = {
+                "Accept": "*/*",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                "title": updatedNote.title,
+                "description": updatedNote.description,
+                "tags": updatedNote.tags
+            });
+
+            const response = await fetch(`https://notes-app-e415d-default-rtdb.firebaseio.com/notes/${updatedNote.id}.json`, {
+                method: "PUT",
+                body: bodyContent,
+                headers: headersList
+            });
+            if (response.status === 200) {
+                showAlert('sucessfull', 'Note updated successfully ')
+            }
+        }
+        else {
+            showAlert('danger', 'Please connect to the internet and try again');
+        }
+    }
+
+
+  
+    // ############################### NOTE DELETE FUNCTION ###############################
     const deleteNote = async (noteId) => {
         if (navigator.onLine) {
             if ((pinnedNotesIds).includes(noteId)) {
@@ -180,6 +201,8 @@ const MainState = (props) => {
         }
 
     }
+
+    // ############################### PIN NOTE FUNCTION #############################
     // pinnedNotesOldIndex
     // eslint-disable-next-line
     const [pinnedNotesOldIndex, setPinnedNotesOldIndex] = useState(localStorage.getItem('pinnedNotesOldIndex') ? JSON.parse(localStorage.getItem('pinnedNotesOldIndex')) : {});
@@ -198,6 +221,8 @@ const MainState = (props) => {
 
     }
 
+
+    // ############################## NOTE UNPIN FUNCTION #############################
     // note index finder function
     const indexFinder = (oldIndex) => {
         let index = oldIndex;
@@ -226,6 +251,9 @@ const MainState = (props) => {
         localStorage.setItem('pinnedNotesOldIndex', JSON.stringify(pinnedNotesOldIndex));
         showAlert('sucessfull', 'note unpin successfully');
     }
+
+
+    // ##################################### WHEN THIS COMPONENT MOUNT FIRST TIME RUN GET NOTES FUNCTION #############################
     useEffect(() => {
         getNotes();
 
