@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import '../../css/NotesContainer.css'
 import context from '../../context/context'
-import Page from './Page'
 import loadingAnimation from '../loading-animation.gif'
 import ReactPaginate from 'react-paginate';
 import '../../css/NoteCard.css'
@@ -12,7 +11,7 @@ import addIcon from '../../icons/add-icon.png';
 const NotesContainer = () => {
 
 
-    const { searchBoxInput, allNotes, notesLoading, noNotesToDisplay, pinnedNotesIds, pinNote, unPinNote, openNoteEditor, deleteNote } = useContext(context);
+    const { searchBoxInput, allNotes, notesLoading, noNotesToDisplay, pinNote, unPinNote, openNoteEditor, deleteNote } = useContext(context);
     const searchFuction = (allNotes) => {
         const reg = new RegExp(searchBoxInput, 'gi')
         if (searchBoxInput.length <= 0) {
