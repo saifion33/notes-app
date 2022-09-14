@@ -18,3 +18,7 @@ This is a notes taking app with crud and pin unpin functionality.
 
 ![App Screenshot](https://github.com/saifion33/notes-app/blob/master/public/i-Notes-screenshot.png)
 
+
+## Authors
+
+- [@saifion33](https://www.github.com/saifion33)
