@@ -3,7 +3,7 @@
 
 This is a notes taking app with crud and pin unpin functionality.
 
-
+![i-Notes App](https://i-notes-app.netlify.app/)
 
 ## Features
 
